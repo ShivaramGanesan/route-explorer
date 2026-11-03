@@ -1,0 +1,7 @@
+name = "route-explorer-api"
+main = "worker/index.js"
+compatibility_date = "2026-11-02"
+
+[vars]
+APP_NAME = "Route Explorer"
+ALLOWED_ORIGINS = "http://localhost:8000,http://127.0.0.1:8000"

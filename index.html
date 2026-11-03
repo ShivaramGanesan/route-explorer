@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101923">
+  <meta name="description" content="A simple multi-destination route planner.">
+  <title>Route Explorer</title>
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://tiles.openfreemap.org">
+  <link rel="preconnect" href="https://photon.komoot.io">
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section id="map" class="map" aria-label="Interactive map"></section>
+
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Route Explorer home">
+        <span class="brand-mark">↗</span>
+        <span>Route Explorer</span>
+      </a>
+      <div class="topbar-actions">
+        <span class="mode-label">TRAVEL MODE</span>
+        <div class="mode-switch" role="group" aria-label="Travel mode">
+          <button class="mode-button active" data-mode="driving" aria-pressed="true">Car</button>
+          <button class="mode-button" data-mode="cycling" aria-pressed="false">Bike</button>
+          <button class="mode-button" data-mode="walking" aria-pressed="false">Walk</button>
+        </div>
+      </div>
+    </header>
+
+    <aside class="panel" id="side-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">PLAN YOUR JOURNEY</p>
+          <h1>Route planner</h1>
+        </div>
+        <button id="collapse-panel" class="icon-button collapse-button" aria-label="Collapse panel" title="Collapse panel">−</button>
+      </div>
+
+      <section class="search-section" aria-label="Starting point search">
+        <label class="search-label" for="source-search">STARTING POINT</label>
+        <div class="search-input-wrap">
+          <span class="search-symbol source-search-symbol">S</span>
+          <input id="source-search" type="search" autocomplete="off" placeholder="Search for a starting point">
+          <span id="source-spinner" class="search-spinner" aria-hidden="true"></span>
+        </div>
+        <div id="source-results" class="search-results" role="listbox" aria-label="Starting point suggestions" hidden></div>
+        <div class="selected-location source-card">
+          <span class="location-icon source-icon">S</span>
+          <span class="location-copy">
+            <strong id="source-title">No starting point</strong>
+            <small id="source-coords">Search above or click the map</small>
+          </span>
+          <button id="clear-source" class="clear-location" type="button" aria-label="Clear starting point" title="Clear starting point" hidden>×</button>
+        </div>
+      </section>
+
+      <section class="search-section destination-search-section" aria-label="Destination search">
+        <label class="search-label" for="destination-search">ADD DESTINATION <span id="destination-count">0/5</span></label>
+        <div class="search-input-wrap">
+          <span class="search-symbol destination-search-symbol">＋</span>
+          <input id="destination-search" type="search" autocomplete="off" placeholder="Search for a destination">
+          <span id="destination-spinner" class="search-spinner" aria-hidden="true"></span>
+        </div>
+        <div id="destination-results" class="search-results" role="listbox" aria-label="Destination suggestions" hidden></div>
+        <p class="search-help">Choose a suggestion to add it. You can also click the map.</p>
+      </section>
+
+      <div class="destination-heading">
+        <div>
+          <h2>Your destinations</h2>
+          <p>Every destination gets a separate route from your start.</p>
+        </div>
+      </div>
+
+      <div id="destination-list" class="destination-list">
+        <div class="empty-state" id="empty-state">
+          <span class="empty-icon">⌖</span>
+          <strong>No destinations yet</strong>
+          <span>Search for a place above or click the map to add one.</span>
+        </div>
+      </div>
+
+      <section id="route-details" class="route-details is-empty" aria-live="polite" aria-label="Selected route details" style="display: none;">
+        <div class="route-details-heading">
+          <div class="route-details-copy">
+            <p class="eyebrow">SELECTED ROUTE</p>
+            <strong id="route-detail-title">No route selected</strong>
+            <small id="route-detail-subtitle">Add a destination to see its route details.</small>
+          </div>
+          <span id="route-detail-mode" class="route-mode-pill">Car</span>
+        </div>
+        <div class="route-detail-stats">
+          <div class="route-detail-stat"><span class="route-detail-icon" aria-hidden="true">↔</span><span><small>Distance</small><strong id="route-detail-distance">—</strong></span></div>
+          <div class="route-detail-stat"><span class="route-detail-icon" aria-hidden="true">◷</span><span><small>Estimated time</small><strong id="route-detail-duration">—</strong></span></div>
+        </div>
+      </section>
+
+      <div class="panel-footer">
+        <div class="route-status" id="route-status" aria-live="polite">Add a starting point and destination to calculate a route.</div>
+        <div class="footer-actions">
+          <button id="fit-map" class="secondary-button">Fit locations</button>
+          <button id="reset-all" class="secondary-button danger-button">Reset</button>
+        </div>
+      </div>
+    </aside>
+
+    <button id="expand-panel" class="expand-panel" aria-label="Open route planner">
+      <span>☷</span><span id="mobile-count">Plan route</span><span>⌃</span>
+    </button>
+
+    <div class="map-hint" id="map-hint">Search for a starting point to begin</div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </main>
+
+  <script src="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
