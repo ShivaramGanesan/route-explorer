@@ -4,4 +4,4 @@ compatibility_date = "2026-11-02"
 
 [vars]
 APP_NAME = "Route Explorer"
-ALLOWED_ORIGINS = "https://route-explorer.pages.dev"
+ALLOWED_ORIGINS = "https://route-explorer-pages.pages.dev"
